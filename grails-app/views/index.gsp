@@ -26,7 +26,7 @@
                     //anytime a message is published to that topic by the server or another client.
                     client.subscribe("/topic/chat", function(message) {
                       console.log(message)
-                        var chatMsg = JSON.parse(JSON.parse(message.body))
+                        var chatMsg = JSON.parse(message.body)
                         var time = '<strong>' + new Date(chatMsg.timestamp).toLocaleTimeString() + '</strong>'
                         $("#chatDiv").append(time + ': ' + chatMsg.message + "<br/>");
                     });

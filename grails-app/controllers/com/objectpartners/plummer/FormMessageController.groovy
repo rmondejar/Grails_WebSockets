@@ -1,6 +1,6 @@
 package com.objectpartners.plummer
 
-import groovy.json.JsonBuilder
+import grails.converters.JSON
 import org.springframework.messaging.simp.SimpMessagingTemplate
 
 class FormMessageController {
@@ -11,13 +11,10 @@ class FormMessageController {
     }
 
     def String message() {
-        def builder = new JsonBuilder()
-        builder {
-            message(params.message)
-            timestamp(new Date().getTime())
-        }
-        brokerMessagingTemplate.convertAndSend("/topic/formMessage", builder.toString())
-        println builder.toString()
+
+        String payload = [message:params.message, timestamp:new Date().getTime()] as JSON
+        brokerMessagingTemplate.convertAndSend("/topic/formMessage", payload)
+
         render(view: "index")
     }
 }
